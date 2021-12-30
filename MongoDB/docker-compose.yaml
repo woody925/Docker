@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+    mongodb:
+        image: mongo:latest
+        container_name: mongodb-smarthome
+        ports:
+            - 28017:27017
+        volumes:
+            - logdata:/data
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=rootuser
+            - MONGO_INITDB_ROOT_PASSWORD=rootpass
+    mongo-express:
+        image: mongo-express
+        container_name: mongo-express-smarthome
+        restart: always
+        ports:
+            - 9081:8081
+        environment:
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
+            - ME_CONFIG_MONGODB_SERVER=mongodb-smarthome
+volumes:
+    logdata: {}
+networks:
+    default:
+        name: mongodb-smarthome_network
